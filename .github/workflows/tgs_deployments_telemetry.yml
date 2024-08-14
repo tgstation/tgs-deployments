@@ -11,9 +11,16 @@ on:
         description: 'TGS Version'
         required: true
         type: string
+      shutdown:
+        description: 'Shutdown'
+        required: true
+        type: boolean
       server_friendly_name:
         description: 'Server Friendly Name'
         type: string
+
+concurrency:
+  group: "report-version"
 
 jobs:
   report_version:
@@ -22,4 +29,4 @@ jobs:
     steps:
     - name: Echo Results
       run: |
-        echo "Telemetry ID: ${{ github.event.inputs.telemetry_id }}, Version: ${{ github.event.inputs.tgs_semver }}, Server Friendly Name: ${{ github.event.inputs.server_friendly_name }}"
+        echo "Telemetry ID: ${{ github.event.inputs.telemetry_id }}, Version: ${{ github.event.inputs.tgs_semver }}, Server Friendly Name: ${{ github.event.inputs.server_friendly_name }}, Shutdown: ${{ github.event.inputs.shutdown }}"
