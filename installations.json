@@ -1,10 +1,10 @@
 {
   "Installations": {
     "20d8cadc-60d0-4168-a67e-8c0be32b600e": {
-      "UpdatedAt": "2024-08-14T05:04:06.4779525+00:00",
+      "UpdatedAt": "2024-08-14T05:07:19.7967208+00:00",
       "FriendlyName": "Dominion\u0027s Test Server",
       "Version": "6.8.0",
-      "ActiveDeploymentId": 1720895799
+      "ActiveDeploymentId": null
     }
   }
 }
