@@ -30,13 +30,12 @@ jobs:
 
     - name: Build
       run: |
-        cd temp_workspace
-        dotnet build -c Release
+        cd temp_workspace/tools/Tgstation.Server.DeploymentsTool
+        dotnet build -c Release -o ${{ runner.temp }}/tool
 
     - name: Generate App Token
       run: |
-        cd temp_workspace
-        dotnet run -c Release --no-build --project tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} token ${{ runner.temp }}/installation_secret.txt
+        dotnet ${{ runner.temp }}/tool/Tgstation.Server.DeploymentsTool.dll ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} token ${{ runner.temp }}/installation_secret.txt
         echo "INSTALLATION_TOKEN=$(cat ${{ runner.temp }}/installation_secret.txt)" >> $GITHUB_ENV
         rm ${{ runner.temp }}/installation_secret.txt
 
@@ -47,9 +46,7 @@ jobs:
         token: ${{ env.INSTALLATION_TOKEN }}
 
     - name: Update Deployments
-      run:  |
-        cd temp_workspace
-        dotnet run -c Release --no-build --project temp_workspace/tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} cleanup
+      run: dotnet ${{ runner.temp }}/tool/Tgstation.Server.DeploymentsTool.dll ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} cleanup
 
     - name: Git Config
       run: |
