@@ -42,12 +42,13 @@ namespace Tgstation.Server.DeploymentsTool
 
                 if (mode == "telemetry")
                 {
-                    var telemetryIdStr = args[2];
-                    var semver = args[3];
-                    var shutdown = args[4];
-                    string? friendlyName = null;
-                    if (args.Length > 5)
-                        friendlyName = args[5].Trim();
+                    var telemetryIdStr = Environment.GetEnvironmentVariable("TELEMETRY_ID");
+                    var semver = Environment.GetEnvironmentVariable("TGS_SEMVER");
+                    var shutdown = Environment.GetEnvironmentVariable("SHUTDOWN");
+                    var friendlyName = Environment.GetEnvironmentVariable("SERVER_FRIENDLY_NAME");
+
+                    if (String.IsNullOrWhiteSpace(friendlyName))
+                        friendlyName = null;
 
                     if (!Guid.TryParse(telemetryIdStr, out var telemetryId))
                     {
@@ -159,7 +160,7 @@ namespace Tgstation.Server.DeploymentsTool
                     entry.UpdatedAt = now;
                 }
 
-                await Task.WhenAll(sendingData.Installations.Select(kvp => UpdateCacheEntry(kvp.Value)));
+                await Task.WhenAll(sendingData.Installations!.Select(kvp => UpdateCacheEntry(kvp.Value)));
 
                 var newJson2 = JsonSerializer.Serialize(
                     sendingData,

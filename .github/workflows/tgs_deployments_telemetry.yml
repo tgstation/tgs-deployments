@@ -27,10 +27,6 @@ jobs:
     name: Report TGS Version
     runs-on: ubuntu-latest
     steps:
-    - name: Echo Payload
-      run: |
-        echo "Telemetry ID: ${{ github.event.inputs.telemetry_id }}, Version: ${{ github.event.inputs.tgs_semver }}, Server Friendly Name: ${{ github.event.inputs.server_friendly_name }}, Shutdown: ${{ github.event.inputs.shutdown }}"
-
     - name: Setup dotnet
       uses: actions/setup-dotnet@v4
       with:
@@ -65,7 +61,12 @@ jobs:
         token: ${{ env.INSTALLATION_TOKEN }}
 
     - name: Update Deployments
-      run: dotnet run -c Release --no-build --project temp_workspace/tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} telemetry \"${{ github.event.inputs.telemetry_id }}\" \"${{ github.event.inputs.tgs_semver }}\" ${{ github.event.inputs.shutdown }} \"${{ github.event.inputs.server_friendly_name }}\"
+      env:
+        TELEMETRY_ID: ${{ github.event.inputs.telemetry_id }}
+        TGS_SEMVER: ${{ github.event.inputs.tgs_semver }}
+        SHUTDOWN: ${{ github.event.inputs.shutdown }}
+        SERVER_FRIENDLY_NAME: ${{ github.event.inputs.server_friendly_name }}
+      run: dotnet run -c Release --no-build --project temp_workspace/tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} telemetry
 
     - name: Git Config
       run: |
