@@ -99,7 +99,7 @@ namespace Tgstation.Server.DeploymentsTool
                     }
 
                     var telemetryClient = await CreateClientForRepo(DeploymentsRepoId, githubAppSerializedKey);
-                    long deploymentId;
+                    long? deploymentId;
                     if (oldEntry?.ActiveDeploymentId.HasValue != true)
                     {
                         var deployment = await telemetryClient.Repository.Deployment.Create(
@@ -112,14 +112,24 @@ namespace Tgstation.Server.DeploymentsTool
                                  TransientEnvironment = true,
                              });
 
-                        deploymentId = deployment.Id;
                         await telemetryClient.Repository.Deployment.Status.Create(
                             DeploymentsRepoId,
-                            deploymentId,
+                            deployment.Id,
                             new NewDeploymentStatus(DeploymentState.Success));
+                        deploymentId = deployment.Id;
                     }
                     else
+                    {
                         deploymentId = oldEntry.ActiveDeploymentId!.Value;
+                        if (isShutdown)
+                        {
+                            await telemetryClient.Repository.Deployment.Status.Create(
+                                DeploymentsRepoId,
+                                deploymentId.Value,
+                                new NewDeploymentStatus(DeploymentState.Inactive));
+                            deploymentId = null;
+                        }
+                    }
 
                     data.Installations[telemetryId.ToString()] = new TelemetryEntry
                     {
