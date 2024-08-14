@@ -75,7 +75,7 @@ jobs:
     - name: Git Commit
       run: |
         git add .
-        git commit -m 'Update Telemetry Entry ${{ github.event.inputs.telemetry_id }}"
+        git commit -m 'Update Telemetry Entry' -m 'Job: ${{ github.run_id }}'
 
     - name: Git Push
       run: |
