@@ -37,6 +37,7 @@ namespace Tgstation.Server.DeploymentsTool
                 {
                     var tokenOutputPath = args[2];
                     await File.WriteAllTextAsync(tokenOutputPath, (await CreateClientForRepo(DataCacheRepoId, githubAppSerializedKey)).Credentials.GetToken());
+                    return 0;
                 }
 
                 if (mode == "telemetry")
