@@ -106,6 +106,7 @@ namespace Tgstation.Server.DeploymentsTool
                              DeploymentsRepoId,
                              new NewDeployment($"tgstation-server-v{semver}")
                              {
+                                 AutoMerge = false,
                                  Description = friendlyName == null ? "(Anonymous Installation)" : telemetryIdStr,
                                  Environment = friendlyName ?? telemetryId.ToString().ToUpperInvariant(),
                                  ProductionEnvironment = true,
