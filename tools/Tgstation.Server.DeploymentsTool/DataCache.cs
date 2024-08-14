@@ -4,6 +4,6 @@ namespace Tgstation.Server.DeploymentsTool
 {
     sealed class DataCache
     {
-        public Dictionary<string, TelemetryEntry> Installations { get; set; }
+        public Dictionary<string, TelemetryEntry>? Installations { get; set; }
     }
 }
