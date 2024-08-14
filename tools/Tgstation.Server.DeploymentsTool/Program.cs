@@ -158,9 +158,7 @@ namespace Tgstation.Server.DeploymentsTool
 
                 async Task UpdateCacheEntry(TelemetryEntry entry)
                 {
-                    if (!entry.ActiveDeploymentId.HasValue
-                        // || (now - entry.UpdatedAt) < TimeSpan.FromDays(InstallationExpiryDays) // TODO: ENABLE
-                        )
+                    if (!entry.ActiveDeploymentId.HasValue || (now - entry.UpdatedAt) < TimeSpan.FromDays(InstallationExpiryDays))
                         return;
 
                     await client.Repository.Deployment.Status.Create(
