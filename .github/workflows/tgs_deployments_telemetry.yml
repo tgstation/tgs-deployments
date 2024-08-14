@@ -1,0 +1,25 @@
+name: TGS Deployments Telemetry
+
+on:
+  workflow_dispatch:
+    inputs:
+      telemetry_id:
+        description: 'Telemetry ID'
+        required: true
+        type: string
+      tgs_semver:
+        description: 'TGS Version'
+        required: true
+        type: string
+      server_friendly_name:
+        description: 'Server Friendly Name'
+        type: string
+
+jobs:
+  report_version:
+    name: Report TGS Version
+    runs-on: ubuntu-latest
+    steps:
+    - name: Echo Results
+      run: |
+        echo "Telemetry ID: ${{ github.event.inputs.telemetry_id }}, Version: ${{ github.event.inputs.tgs_semver }}, Server Friendly Name: ${{ github.event.inputs.server_friendly_name }}"
