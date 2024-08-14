@@ -35,22 +35,22 @@ jobs:
     - name: Tool Checkout
       uses: actions/checkout@v4
       with:
-        path: temp_workspace
+        path: ${{ runner.temp }}/temp_workspace
 
     - name: Restore
       run: |
-        cd temp_workspace
+        cd ${{ runner.temp }}/temp_workspace
         dotnet restore
 
     - name: Build
       run: |
-        cd temp_workspace
+        cd ${{ runner.temp }}/temp_workspace
         dotnet build -c Release
 
     - name: Generate App Token
       run: |
-        cd temp_workspace
-        dotnet run -c Release --no-build --project tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} token ${{ runner.temp }}/installation_secret.txt
+        cd ${{ runner.temp }}/temp_workspace
+        dotnet run -c Release --no-build --project ${{ runner.temp }}/tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} token ${{ runner.temp }}/installation_secret.txt
         echo "INSTALLATION_TOKEN=$(cat ${{ runner.temp }}/installation_secret.txt)" >> $GITHUB_ENV
         rm ${{ runner.temp }}/installation_secret.txt
 
@@ -66,7 +66,7 @@ jobs:
         TGS_SEMVER: ${{ github.event.inputs.tgs_semver }}
         SHUTDOWN: ${{ github.event.inputs.shutdown }}
         SERVER_FRIENDLY_NAME: ${{ github.event.inputs.server_friendly_name }}
-      run: dotnet run -c Release --no-build --project temp_workspace/tools/Tgstation.Server.DeploymentsTool/Tgstation.Server.DeploymentsTool.csproj ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} telemetry
+      run: dotnet run -c Release --no-build --project ${{ runner.temp }}/temp_workspace/tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} telemetry
 
     - name: Git Config
       run: |
