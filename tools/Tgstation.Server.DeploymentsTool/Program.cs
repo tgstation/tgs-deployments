@@ -23,7 +23,7 @@ namespace Tgstation.Server.DeploymentsTool
         const long DeploymentsRepoId = 92952846;
 
         // json in working dir
-        const string InstallationsFilePath = "installations.json";
+        const string InstallationsFilePath = "../installations.json";
 
         static async Task<int> Main(string[] args)
         {

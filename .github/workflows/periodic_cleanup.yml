@@ -47,7 +47,9 @@ jobs:
         token: ${{ env.INSTALLATION_TOKEN }}
 
     - name: Update Deployments
-      run: dotnet run -c Release --no-build --project temp_workspace/tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} cleanup
+      run:  |
+        cd temp_workspace
+        dotnet run -c Release --no-build --project temp_workspace/tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} cleanup
 
     - name: Git Config
       run: |
