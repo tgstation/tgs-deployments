@@ -66,7 +66,7 @@ jobs:
         TGS_SEMVER: ${{ github.event.inputs.tgs_semver }}
         SHUTDOWN: ${{ github.event.inputs.shutdown }}
         SERVER_FRIENDLY_NAME: ${{ github.event.inputs.server_friendly_name }}
-      run: dotnet run -c Release --no-build --project temp_workspace/tools/Tgstation.Server.DeploymentsTool ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} telemetry
+      run: dotnet run -c Release --no-build --project temp_workspace/tools/Tgstation.Server.DeploymentsTool/Tgstation.Server.DeploymentsTool.csproj ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} telemetry
 
     - name: Git Config
       run: |
