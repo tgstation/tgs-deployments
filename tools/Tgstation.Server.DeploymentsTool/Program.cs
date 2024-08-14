@@ -111,6 +111,7 @@ namespace Tgstation.Server.DeploymentsTool
                                  Environment = friendlyName ?? telemetryId.ToString().ToUpperInvariant(),
                                  ProductionEnvironment = true,
                                  TransientEnvironment = true,
+                                 RequiredContexts = new System.Collections.ObjectModel.Collection<string>(),
                              });
 
                         await telemetryClient.Repository.Deployment.Status.Create(
