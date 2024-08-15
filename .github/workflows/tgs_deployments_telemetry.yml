@@ -72,10 +72,12 @@ jobs:
         git config user.name "tgstation-server-ci[bot]"
         git config user.email "161980869+tgstation-server-ci[bot]@users.noreply.github.com"
 
+    - name: Git Stage
+      run: git add .
+
     - name: Git Commit
       run: |
-        git add .
-        git commit -m 'Update Telemetry Entry' -m 'Job: ${{ github.run_id }}'
+        git diff-index --quiet HEAD || git commit -m 'Update Telemetry Entry' -m 'Job: ${{ github.run_id }}'
 
     - name: Git Push
       run: |
