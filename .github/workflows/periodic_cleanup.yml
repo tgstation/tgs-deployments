@@ -31,7 +31,7 @@ jobs:
     - name: Build
       run: |
         cd temp_workspace/tools/Tgstation.Server.DeploymentsTool
-        dotnet build -c Release -o ${{ runner.temp }}/tool
+        dotnet publish -c Release -o ${{ runner.temp }}/tool
 
     - name: Generate App Token
       run: |
