@@ -5,6 +5,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    labels:
-      - "Dependencies"
     open-pull-requests-limit: 100
+  - package-ecosystem: github-actions
+    directory: "/"
+    target-branch: master
+    schedule:
+      interval: daily
