@@ -1,15 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
-using Microsoft.IdentityModel.Tokens;
 
 using Octokit;
 
@@ -29,17 +24,10 @@ namespace Tgstation.Server.DeploymentsTool
         {
             try
             {
-                var githubAppSerializedKey = args[0];
+                var gitHubToken = args[0];
                 var mode = args[1];
 
                 var now = DateTimeOffset.UtcNow;
-                if (mode == "token")
-                {
-                    var tokenOutputPath = args[2];
-                    await File.WriteAllTextAsync(tokenOutputPath, (await CreateClientForRepo(DataCacheRepoId, githubAppSerializedKey)).Credentials.GetToken());
-                    return 0;
-                }
-
                 if (mode == "telemetry")
                 {
                     var telemetryIdStr = Environment.GetEnvironmentVariable("TELEMETRY_ID");
@@ -98,7 +86,7 @@ namespace Tgstation.Server.DeploymentsTool
                         return 4;
                     }
 
-                    var telemetryClient = await CreateClientForRepo(DeploymentsRepoId, githubAppSerializedKey);
+                    var telemetryClient = CreateClientForRepo(gitHubToken);
                     long? deploymentId;
                     if (oldEntry?.ActiveDeploymentId.HasValue != true)
                     {
@@ -152,7 +140,7 @@ namespace Tgstation.Server.DeploymentsTool
                     return 0;
                 }
 
-                var client = await CreateClientForRepo(DeploymentsRepoId, githubAppSerializedKey);
+                var client = CreateClientForRepo(gitHubToken);
                 var sendingJson = await File.ReadAllTextAsync(InstallationsFilePath);
                 var sendingData = JsonSerializer.Deserialize<DataCache>(sendingJson)!;
 
@@ -189,37 +177,10 @@ namespace Tgstation.Server.DeploymentsTool
             }
         }
 
-        static async ValueTask<GitHubClient> CreateClientForRepo(long repositoryId, string githubAppSerializedKey)
+        static GitHubClient CreateClientForRepo(string tokenArg)
         {
-            var splits = githubAppSerializedKey.Split(':');
-
-            var pemBytes = Convert.FromBase64String(splits[1]);
-            var pem = Encoding.UTF8.GetString(pemBytes);
-
-            var rsa = RSA.Create();
-            rsa.ImportFromPem(pem);
-
-            var signingCredentials = new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256);
-            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler { SetDefaultTimesOnTokenCreation = false };
-
-            var now = DateTime.UtcNow;
-
-            var jwt = jwtSecurityTokenHandler.CreateToken(new SecurityTokenDescriptor
-            {
-                Issuer = splits[0],
-                Expires = now.AddMinutes(10),
-                IssuedAt = now,
-                SigningCredentials = signingCredentials
-            });
-            var jwtStr = jwtSecurityTokenHandler.WriteToken(jwt);
-
             var client = new GitHubClient(new ProductHeaderValue("tgs_deployments_tool"));
-            client.Credentials = new Credentials(jwtStr, AuthenticationType.Bearer);
-
-            var installation = await client.GitHubApps.GetRepositoryInstallationForCurrent(repositoryId);
-            var installToken = await client.GitHubApps.CreateInstallationToken(installation.Id);
-
-            client.Credentials = new Credentials(installToken.Token);
+            client.Credentials = new Credentials(tokenArg);
             return client;
         }
     }

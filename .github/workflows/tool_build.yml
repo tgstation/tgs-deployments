@@ -1,9 +1,9 @@
-name: 'Tool Build'
+name: Tool Build
 
 on:
   push:
     branches:
-    - main
+      - main
 
 jobs:
   tool-build:
@@ -11,18 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        configuration: [ 'Debug', 'Release' ]
+        configuration: ["Debug", "Release"]
     steps:
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
 
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Restore
-      run: dotnet restore
+      - name: Restore
+        run: dotnet restore
 
-    - name: Build
-      run: dotnet build -c ${{ matrix.configuration }}
+      - name: Build
+        run: dotnet build -c ${{ matrix.configuration }}

@@ -17,21 +17,14 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.user.id == 49699333
     steps:
-      - name: Tool Checkout
-        uses: actions/checkout@v4
-
-      - name: Build
-        run: |
-          cd tools/Tgstation.Server.DeploymentsTool
-          dotnet publish -c Release -o ${{ runner.temp }}/tool
-
       - name: Generate App Token
-        run: |
-          dotnet ${{ runner.temp }}/tool/Tgstation.Server.DeploymentsTool.dll ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} token ${{ runner.temp }}/installation_secret.txt
-          echo "INSTALLATION_TOKEN=$(cat ${{ runner.temp }}/installation_secret.txt)" >> $GITHUB_ENV
-          rm ${{ runner.temp }}/installation_secret.txt
+        id: app-token-generation
+        uses: getsentry/action-github-app-token@d4b5da6c5e37703f8c3b3e43abb5705b46e159cc
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: Enable Automerge
         uses: daneden/enable-automerge-action@f8558b65c5b8d8bfb592c4e74e3d491624a38fbd #v1.0.2-ish
         with:
-          github-token: ${{ env.INSTALLATION_TOKEN }}
+          github-token: ${{ steps.app-token-generation.outputs.token }}

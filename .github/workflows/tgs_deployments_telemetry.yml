@@ -4,19 +4,19 @@ on:
   workflow_dispatch:
     inputs:
       telemetry_id:
-        description: 'Telemetry ID'
+        description: "Telemetry ID"
         required: true
         type: string
       tgs_semver:
-        description: 'TGS Version'
+        description: "TGS Version"
         required: true
         type: string
       shutdown:
-        description: 'Shutdown'
+        description: "Shutdown"
         required: true
         type: boolean
       server_friendly_name:
-        description: 'Server Friendly Name'
+        description: "Server Friendly Name"
         type: string
 
 concurrency:
@@ -27,59 +27,39 @@ jobs:
     name: Report TGS Version
     runs-on: ubuntu-latest
     steps:
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+      - name: Generate App Token
+        id: app-token-generation
+        uses: getsentry/action-github-app-token@d4b5da6c5e37703f8c3b3e43abb5705b46e159cc
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
-    - name: Tool Checkout
-      uses: actions/checkout@v4
-      with:
-        path: temp_workspace
+      - name: Main Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: data
+          token: ${{ steps.app-token-generation.outputs.token }}
 
-    - name: Restore
-      run: |
-        cd temp_workspace
-        dotnet restore
+      - name: Update Deployments
+        env:
+          TELEMETRY_ID: ${{ github.event.inputs.telemetry_id }}
+          TGS_SEMVER: ${{ github.event.inputs.tgs_semver }}
+          SHUTDOWN: ${{ github.event.inputs.shutdown }}
+          SERVER_FRIENDLY_NAME: ${{ github.event.inputs.server_friendly_name }}
+        run: dotnet ${{ runner.temp }}/tool/Tgstation.Server.DeploymentsTool.dll ${{ steps.app-token-generation.outputs.token }} telemetry
 
-    - name: Build
-      run: |
-        cd temp_workspace/tools/Tgstation.Server.DeploymentsTool
-        dotnet publish -c Release -o ${{ runner.temp }}/tool
+      - name: Git Config
+        run: |
+          git config user.name "tgstation-server-ci[bot]"
+          git config user.email "161980869+tgstation-server-ci[bot]@users.noreply.github.com"
 
-    - name: Generate App Token
-      run: |
-        dotnet ${{ runner.temp }}/tool/Tgstation.Server.DeploymentsTool.dll ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} token ${{ runner.temp }}/installation_secret.txt
-        echo "INSTALLATION_TOKEN=$(cat ${{ runner.temp }}/installation_secret.txt)" >> $GITHUB_ENV
-        rm ${{ runner.temp }}/installation_secret.txt
+      - name: Git Stage
+        run: git add .
 
-    - name: Main Checkout
-      uses: actions/checkout@v4
-      with:
-        ref: data
-        token: ${{ env.INSTALLATION_TOKEN }}
+      - name: Git Commit
+        run: |
+          git diff-index --quiet HEAD || git commit -m 'Update Telemetry Entry' -m 'Job: ${{ github.run_id }}'
 
-    - name: Update Deployments
-      env:
-        TELEMETRY_ID: ${{ github.event.inputs.telemetry_id }}
-        TGS_SEMVER: ${{ github.event.inputs.tgs_semver }}
-        SHUTDOWN: ${{ github.event.inputs.shutdown }}
-        SERVER_FRIENDLY_NAME: ${{ github.event.inputs.server_friendly_name }}
-      run: dotnet ${{ runner.temp }}/tool/Tgstation.Server.DeploymentsTool.dll ${{ secrets.TGS_CI_GITHUB_APP_TOKEN_SERIALIZED }} telemetry
-
-    - name: Git Config
-      run: |
-        git config user.name "tgstation-server-ci[bot]"
-        git config user.email "161980869+tgstation-server-ci[bot]@users.noreply.github.com"
-
-    - name: Git Stage
-      run: git add .
-
-    - name: Git Commit
-      run: |
-        git diff-index --quiet HEAD || git commit -m 'Update Telemetry Entry' -m 'Job: ${{ github.run_id }}'
-
-    - name: Git Push
-      run: |
-        git push -u origin data
-
+      - name: Git Push
+        run: |
+          git push -u origin data
