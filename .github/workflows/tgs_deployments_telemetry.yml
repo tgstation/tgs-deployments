@@ -27,6 +27,21 @@ jobs:
     name: Report TGS Version
     runs-on: ubuntu-latest
     steps:
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Tool Checkout
+        uses: actions/checkout@v4
+        with:
+          path: temp_workspace
+
+      - name: Build
+        run: |
+          cd temp_workspace/tools/Tgstation.Server.DeploymentsTool
+          dotnet publish -c Release -o ${{ runner.temp }}/tool
+
       - name: Generate App Token
         id: app-token-generation
         uses: getsentry/action-github-app-token@d4b5da6c5e37703f8c3b3e43abb5705b46e159cc
