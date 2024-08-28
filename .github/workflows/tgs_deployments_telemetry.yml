@@ -21,6 +21,7 @@ on:
 
 concurrency:
   group: "report-version"
+  cancel-in-progress: false
 
 jobs:
   report_version:
