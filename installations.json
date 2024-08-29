@@ -47,6 +47,12 @@
       "FriendlyName": null,
       "Version": "6.9.2",
       "ActiveDeploymentId": 1757248065
+    },
+    "d505e34f-f29e-4540-8c61-1e4f966ad7ab": {
+      "UpdatedAt": "2024-08-29T05:36:11.2176002+00:00",
+      "FriendlyName": "rezbox",
+      "Version": "6.9.2",
+      "ActiveDeploymentId": 1757414446
     }
   }
 }
