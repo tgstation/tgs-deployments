@@ -52,6 +52,7 @@ jobs:
         with:
           ref: data
           token: ${{ steps.app-token-generation.outputs.token }}
+          fetch-depth: 0
 
       - name: Update Deployments
         env:
