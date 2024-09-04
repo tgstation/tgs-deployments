@@ -19,10 +19,6 @@ on:
         description: "Server Friendly Name"
         type: string
 
-concurrency:
-  group: "report-version"
-  cancel-in-progress: false
-
 jobs:
   report_version:
     name: Report TGS Version
@@ -77,6 +73,7 @@ jobs:
         run: |
           git diff-index --quiet HEAD || git commit -m 'Update Telemetry Entry' -m 'Job: ${{ github.run_id }}'
 
-      - name: Git Push
+      - name: Git Pull & Push # Pull is a shitty workaround for https://github.com/orgs/community/discussions/5435
         run: |
+          git pull
           git push -u origin data
