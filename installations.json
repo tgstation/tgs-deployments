@@ -349,10 +349,10 @@
       "ActiveDeploymentId": null
     },
     "c261ac58-7edf-427e-abdf-56bbffb10143": {
-      "UpdatedAt": "2024-09-08T22:17:57.6541857+00:00",
+      "UpdatedAt": "2024-09-08T22:18:07.4081811+00:00",
       "FriendlyName": "Diamond Station",
       "Version": "6.9.2",
-      "ActiveDeploymentId": 1782145941
+      "ActiveDeploymentId": null
     }
   }
 }
