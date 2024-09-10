@@ -377,6 +377,12 @@
       "FriendlyName": null,
       "Version": "6.9.2",
       "ActiveDeploymentId": 1785237867
+    },
+    "89f3d003-1179-4bcd-bbf7-e174d5533a11": {
+      "UpdatedAt": "2024-09-10T09:45:54.3137027+00:00",
+      "FriendlyName": "CM-SS13",
+      "Version": "6.9.2",
+      "ActiveDeploymentId": 1786398755
     }
   }
 }
