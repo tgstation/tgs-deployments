@@ -13,10 +13,10 @@
       "ActiveDeploymentId": null
     },
     "07aebbd5-bd67-44f9-b729-f33d22eecea8": {
-      "UpdatedAt": "2024-10-28T21:51:52.3248929+00:00",
+      "UpdatedAt": "2024-11-05T00:37:17.9536718+00:00",
       "FriendlyName": "TerraGov Marine Corps",
       "Version": "6.9.0",
-      "ActiveDeploymentId": 1855405445
+      "ActiveDeploymentId": null
     },
     "08beae8d-798a-4c2a-ac34-1d4409636c48": {
       "UpdatedAt": "2024-11-04T06:54:34.3241887+00:00",
@@ -361,10 +361,10 @@
       "ActiveDeploymentId": null
     },
     "ac4d4b14-ddbe-44f5-92d0-6ea45c4370e4": {
-      "UpdatedAt": "2024-10-28T02:06:30.8599421+00:00",
+      "UpdatedAt": "2024-11-05T00:37:17.9536718+00:00",
       "FriendlyName": null,
       "Version": "6.9.2",
-      "ActiveDeploymentId": 1909488753
+      "ActiveDeploymentId": null
     },
     "d75383a9-1321-4e4d-94a4-3b9ede81843c": {
       "UpdatedAt": "2024-11-03T19:43:20.2843822+00:00",
