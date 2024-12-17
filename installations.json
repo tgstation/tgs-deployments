@@ -497,6 +497,12 @@
       "FriendlyName": null,
       "Version": "6.12.0",
       "ActiveDeploymentId": 2047301308
+    },
+    "fe97cf07-eae9-4f6c-ba93-bdc878c7ac5d": {
+      "UpdatedAt": "2024-12-17T17:15:38.2419101+00:00",
+      "FriendlyName": null,
+      "Version": "6.12.0",
+      "ActiveDeploymentId": 2048234349
     }
   }
 }
