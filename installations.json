@@ -187,10 +187,10 @@
       "ActiveDeploymentId": null
     },
     "1e490c26-35c9-4727-ba79-ad038ea93966": {
-      "UpdatedAt": "2024-12-22T04:43:17.4710681+00:00",
+      "UpdatedAt": "2024-12-22T04:43:21.6611606+00:00",
       "FriendlyName": null,
-      "Version": "6.12.0",
-      "ActiveDeploymentId": null
+      "Version": "6.12.2",
+      "ActiveDeploymentId": 2060248106
     },
     "e967d365-f8ec-4700-8c61-9c10815cdf92": {
       "UpdatedAt": "2024-12-21T01:17:03.1704825+00:00",
