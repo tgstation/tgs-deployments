@@ -1097,6 +1097,12 @@
       "FriendlyName": null,
       "Version": "6.12.3",
       "ActiveDeploymentId": null
+    },
+    "5306c5f2-e4de-4036-94e7-ccd7df2f28fb": {
+      "UpdatedAt": "2025-01-04T23:49:16.5164371+00:00",
+      "FriendlyName": "chen-stupid-ss13-server",
+      "Version": "6.12.3",
+      "ActiveDeploymentId": 2084393885
     }
   }
 }
