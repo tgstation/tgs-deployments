@@ -7,10 +7,10 @@
       "ActiveDeploymentId": null
     },
     "91e59769-4fdd-4fe0-be18-8918e3ab4fe9": {
-      "UpdatedAt": "2025-01-02T00:37:05.9493729+00:00",
+      "UpdatedAt": "2025-01-04T15:40:26.6896557+00:00",
       "FriendlyName": "OpenDream Development",
-      "Version": "6.12.0",
-      "ActiveDeploymentId": null
+      "Version": "6.12.3",
+      "ActiveDeploymentId": 2083952237
     },
     "07aebbd5-bd67-44f9-b729-f33d22eecea8": {
       "UpdatedAt": "2025-01-04T00:39:08.1032103+00:00",
