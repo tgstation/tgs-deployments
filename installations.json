@@ -1219,10 +1219,10 @@
       "ActiveDeploymentId": null
     },
     "843a9e51-ee1b-43c1-a116-da405be2e9e0": {
-      "UpdatedAt": "2025-01-18T20:43:34.5740841+00:00",
+      "UpdatedAt": "2025-01-18T21:26:13.975649+00:00",
       "FriendlyName": "Shiptest",
       "Version": "6.12.2",
-      "ActiveDeploymentId": 2101938227
+      "ActiveDeploymentId": null
     },
     "d3985dfb-a66b-4a89-9ca7-64413f5414f6": {
       "UpdatedAt": "2025-01-18T12:22:14.5550608+00:00",
