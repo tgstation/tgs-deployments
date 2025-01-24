@@ -2117,6 +2117,12 @@
       "FriendlyName": null,
       "Version": "6.12.3",
       "ActiveDeploymentId": null
+    },
+    "2c50993e-76cf-40c9-adae-23b9350a1151": {
+      "UpdatedAt": "2025-01-24T08:25:38.7390156+00:00",
+      "FriendlyName": "/tg/station13: blockmoths",
+      "Version": "6.12.3",
+      "ActiveDeploymentId": 2139662800
     }
   }
 }
