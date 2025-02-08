@@ -2519,6 +2519,12 @@
       "FriendlyName": null,
       "Version": "6.12.3",
       "ActiveDeploymentId": 2186229179
+    },
+    "deabd073-5457-4f15-a873-bc840cfad005": {
+      "UpdatedAt": "2025-02-08T17:41:17.8494432+00:00",
+      "FriendlyName": "sigmas",
+      "Version": "6.12.3",
+      "ActiveDeploymentId": 2186261587
     }
   }
 }
